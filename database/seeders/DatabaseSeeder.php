@@ -18,14 +18,16 @@ class DatabaseSeeder extends Seeder
     {
 
         
-        $this->call(CountriesTableSeeder::class);
+       /* $this->call(CountriesTableSeeder::class);
         $this->call(RoomsTableSeeder::class);
         $this->call(OperatorsTableSeeder::class);
         $this->call(RegimesTableSeeder::class);
         $this->call(EmployeesTableSeeder::class);
-        $this->call(ReservesTableSeeder::class);
+        $this->call(ReservesTableSeeder::class);*/
+        $this->call(CategoriesTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
 
-        Reservation::factory()->count(500)->create();
+       // Reservation::factory()->count(500)->create();
 
     }
 }

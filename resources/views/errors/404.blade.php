@@ -23,7 +23,7 @@
 
 
 
-    <img style="width: 100%;" src="{{asset('images/404.jpg')}}" alt="Error 404">
+    <img style="width: 100%;" src="{{asset('HomePage/images/404.jpg')}}" alt="Error 404">
 
 </body>
 

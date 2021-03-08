@@ -8,6 +8,12 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
+use App\Models\ReserveAccount;
+use App\Models\Reservation;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderProduct;
 
 class EmployeeController extends Controller
 {
@@ -25,14 +31,14 @@ class EmployeeController extends Controller
         $this->middleware('auth:employee',['only' => ['secret']]);
     }
 
-   public function showLoginForm()
+   public function showLoginForm() // Muestra el Formulario de Sesión
    {
 
-       return view('employees.login');
+    return view('employees.login');
    }
 
 
-   public function login(Request $request)
+   public function login(Request $request) // COmprobación de Credenciales, haciendo uso de Herramientas UI
    {
 
 
@@ -44,7 +50,7 @@ class EmployeeController extends Controller
       ];
 
       if (Auth::guard('employee')->attempt($credentials)) {
-          return redirect()->intended('home');
+             return redirect('/employees/area');
       }else{
           $request->session()->put('Error', 'Wrong account or Disabled'); // Uso Put ya que flash, no me funciona
           return redirect("employees/login"); // Caso de Error
@@ -53,13 +59,13 @@ class EmployeeController extends Controller
    }
 
 
-   public function showRegisterForm()
+   public function showRegisterForm() // Mostrar el formulario de Registro
    {
 
        return view('employees.register');
    }
 
-   protected function create(Request $request)
+   protected function create(Request $request) // Nos permite crear un Usuario.
     {
 
         
@@ -72,13 +78,15 @@ class EmployeeController extends Controller
                 'name' => 'Yerobe',
             ]);
 
-            return view('orders');
+            return redirect('/employees/area');
         
     }
 
 
-   public function secret(){
-       return 'Hola ' . auth('employee')->user()->name;
+   public function secret(){ // Método secreto
+
+
+       return view('employees.administration');
    }
 
 }

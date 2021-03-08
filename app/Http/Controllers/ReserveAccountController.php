@@ -4,13 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ReserveAccount;
+use Illuminate\Support\Facades\DB;
+
+
 
 class ReserveAccountController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('auth:employee',['only' => ['modifyUpdateStatus']]);
+    }
+
+
     public function modifyUpdateStatus($id)
     {
 
-        ReserveAccount::where('id', '=', $id)->update(['status' => 1]);
+
+        ReserveAccount::where('id', '=', $id)->update(['status' => 1, 'idReserve' => 1]); // El idReserve, se cogería de forma automática en el PMS
 
         return redirect('home');
 
@@ -29,5 +40,20 @@ class ReserveAccountController extends Controller
         */
 
         // return view('reserva/edit', array('reserve' => Reservation::findOrFail($id)));
+    }
+
+
+    public function updatePointsAccount($puntos_gastados, $usuario){
+
+        $cuenta_usuario = DB::table('reserve_accounts')->where('id','=',$usuario)->first(); // Recogemos los datos de este para obtener los puntos
+
+        $puntos_restantes = $cuenta_usuario->points - $puntos_gastados; // Calculamos el resultado
+
+
+        DB::table('reserve_accounts') // Actualizamos los Puntos del usuario
+                ->where('id', $usuario)
+                ->update(['points' => $puntos_restantes]);
+
+
     }
 }

@@ -18,7 +18,7 @@ class CreateReserveAccountsTable extends Migration
             $table->string('email');
             $table->integer('points');
             $table->boolean('status'); // 1 = Activo
-            $table->unsignedBigInteger('idReserve');
+            $table->unsignedBigInteger('idReserve')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

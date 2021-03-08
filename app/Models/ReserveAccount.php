@@ -6,11 +6,21 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Reservation;
 
 
 class ReserveAccount extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
+
+
+    public function user()
+
+    {
+   
+    return $this->belongsTo(Reservation::class);
+   
+    }
 
     //protected $guard = 'clients';
 
